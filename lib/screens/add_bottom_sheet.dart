@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_list_flutter/models/tasks_notifier.dart';
 
-class AddBottomSheet extends StatelessWidget {
-  const AddBottomSheet({super.key});
+class AddBottomSheet extends StatefulWidget {
+
+   AddBottomSheet({super.key});
+
+  @override
+  State<AddBottomSheet> createState() => _AddBottomSheetState();
+}
+
+class _AddBottomSheetState extends State<AddBottomSheet> {
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +26,18 @@ class AddBottomSheet extends StatelessWidget {
             style: TextStyle(color: Colors.lightBlueAccent, fontSize: 26),
           )),
           TextField(
+            controller: controller,
             autofocus: true,
             textAlign: TextAlign.center,
             decoration: InputDecoration(focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.lightBlueAccent))),
           ),SizedBox(height: 10.0,),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+               Provider.of<TasksNotifier>(context, listen: false).addTask(controller.text.trim());
+               Navigator.pop(context);
+               
+             
+            },
             child: Text(
               'Add',
               style: TextStyle(color: Colors.white),

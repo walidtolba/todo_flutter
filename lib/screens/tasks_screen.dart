@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_list_flutter/models/tasks_notifier.dart';
 import 'package:todo_list_flutter/widgets/tasks_list.dart';
 import 'package:todo_list_flutter/screens/add_bottom_sheet.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
   const TasksScreen({super.key});
 
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +45,7 @@ class TasksScreen extends StatelessWidget {
                         fontSize: 46),
                   ),
                   Text(
-                    '12 Tasks',
+                    '${Provider.of<TasksNotifier>(context).count} Tasks',
                     style: TextStyle(color: Colors.white, fontSize: 18.0),
                   )
                 ],
@@ -61,8 +68,9 @@ class TasksScreen extends StatelessWidget {
           Icons.add,
           color: Colors.white,
         ),
-        onPressed: (){
-          showModalBottomSheet(context: context, builder: (context) => AddBottomSheet());
+        onPressed: () async {
+          showModalBottomSheet(
+              context: context, builder: (context) => AddBottomSheet());
         },
         backgroundColor: Colors.lightBlueAccent,
         shape: CircleBorder(),
